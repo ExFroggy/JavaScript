@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>Program Structure Task1</title>
+    <meta charset="utf-8">
+    
+    <script>
+        var w = Number(prompt("width",8));
+        var h = Number(prompt("height",8));
+        var grid = "";
+        
+        for (var i=0; i<h; i++) {
+            for (var j=0; j<w; j++) {
+                if ( (i + j) % 2 == 0) 
+                    grid += " "; 
+                else
+                    grid += "#";
+            }
+            grid += "\n";
+        }
+        
+        console.log(grid);                    
+        
+    </script>
+</head>
+    
+<body>
+</body>
+</html>
