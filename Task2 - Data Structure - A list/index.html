@@ -34,11 +34,15 @@ function prepend(value, list) {
 }
 
 function nth(list, n) {
-  if (n < listToArray(list).length && n != 0) {
-    return nth(list.rest, n-1);
+  if (n < listToArray(list).length) {
+    if (n != 0)
+      return nth(list.rest, n-1);
+    else {
+      return list.value;
+    } 
   } else {
-    return list.value;
-  }
+      return "Error";
+    }
 }
 
 console.log(arrayToList([10, 20]));
