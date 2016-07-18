@@ -23,7 +23,7 @@ function reverseArray(array) {
 function reverseArrayInPlace(array) {
   var len = array.length;
   
-  for (var i=0; i<=Math.floor(len/2); i++) {
+  for (var i=0; i<Math.floor(len/2); i++) {
     var r = array[i];
     array[i] = array[len-1-i];
     array[len-1-i] = r;
