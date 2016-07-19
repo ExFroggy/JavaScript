@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="libs.js"></script>
+  <script src="ancestry.js"></script>
+</head>
+<body>
+
+  <script>
+
+var ancestry = JSON.parse(ANCESTRY_FILE);
+    
+function average(array) {
+  function plus(a, b) { return a + b; }
+  return array.reduce(plus) / array.length;
+}
+
+var byName = {};
+ancestry.forEach(function(person) {
+  byName[person.name] = person;
+});
+
+var differences = [];
+
+for (key in byName) {
+  var mother; var child;
+  if ((mother = (child = byName[key]).mother) in byName)
+    differences.push(child.born - byName[mother].born);
+}
+
+console.log(average(differences)); // → 31.2
+
+  </script>
+
+   <script src="test.js"></script>
+</body>
+</html>
