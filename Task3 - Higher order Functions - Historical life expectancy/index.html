@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="libs.js"></script>
+  <script src="ancestry.js"></script>
+</head>
+<body>
+
+  <script>
+
+var ancestry = JSON.parse(ANCESTRY_FILE);
+
+function average(array) {
+  function plus(a, b) { return a + b; }
+  return array.reduce(plus) / array.length;
+};
+
+var array = {};
+var result = [];
+
+function groupBy(array, action) {
+  
+}
+    
+function getStatistic() {
+  var max, min = max = Math.ceil(Math.ceil(ancestry[0].died/100));
+  
+  for (key in ancestry) {
+    var now = Math.ceil(ancestry[key].died/100);
+    if (now < min) min = now;
+    if (now > max) max = now;
+  }
+    
+  for (var i = min; i <= max; i++) {
+    array[i] = {};
+    array[i].arr = [];
+  }
+  
+  for (var key in ancestry) {
+    var born = ancestry[key].born;
+    var died = ancestry[key].died;
+    array[Math.ceil(died/100)].arr.push(died - born);
+  }
+  
+  for (var key in array) { 
+    result.push(key+": "+average(array[key].arr));
+  }
+
+  return result;
+};
+
+	console.log(getStatistic());
+
+// → 16: 43.5
+//   17: 51.2
+//   18: 52.8
+//   19: 54.8
+//   20: 84.7
+//   21: 94
+
+
+  </script>
+
+   <script src="test.js"></script>
+</body>
+</html>
