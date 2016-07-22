@@ -12,20 +12,16 @@
 function Vector(x, y) {
   this.x = x;
   this.y = y;
-    
+  
   return this;
 }
     
 Vector.prototype.plus = function(obj) {
-  this.x += obj.x;
-  this.y += obj.y;
-  return this;
+  return new Vector(this.x += obj.x, this.y += obj.y);
 };
   
 Vector.prototype.minus = function(obj) {
-  this.x -= obj.x;
-  this.y -= obj.y;
-  return this;
+  return new Vector(this.x -= obj.x, this.y -= obj.y);
 };
     
 Object.defineProperty(Vector.prototype, "length", {
