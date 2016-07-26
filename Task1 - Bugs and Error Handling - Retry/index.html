@@ -19,13 +19,13 @@ function primitiveMultiply(a, b) {
 }
 
 function reliableMultiply(a, b) {
-  try {
-    return primitiveMultiply(a, b);
-  } catch (error) {
-    if (error instanceof MultiplicatorUnitFailure)
-      return reliableMultiply(a, b);
-    else
-      throw error;
+  for (;;) {
+    try {
+      return primitiveMultiply(a, b);
+    } catch (error) {
+      if (!(error instanceof MultiplicatorUnitFailure))
+        throw error;   
+    }
   }
 }
 
