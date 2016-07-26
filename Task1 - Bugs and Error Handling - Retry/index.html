@@ -22,7 +22,10 @@ function reliableMultiply(a, b) {
   try {
     return primitiveMultiply(a, b);
   } catch (error) {
-    return reliableMultiply(a, b);
+    if (error instanceof MultiplicatorUnitFailure)
+      return reliableMultiply(a, b);
+    else
+      throw error;
   }
 }
 
