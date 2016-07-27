@@ -10,33 +10,32 @@
   <script>
 
 // Fill in the regular expressions
-console.log(/ca[rt]/g.test("bad cats"));
-    
-verify(/ca[rt]/g,
+
+verify(/ca[rt]/,
        ["my car", "bad cats"],
        ["camper", "high art"]);
 
-verify(/p(r)?op/g,
+verify(/pr?op/,
        ["pop culture", "mad props"],
        ["plop"]);
 
-verify(/ferret|ferry|ferrari/g,
+verify(/ferr(et|y|ari)/,
        ["ferret", "ferry", "ferrari"],
        ["ferrum", "transfer A"]);
 
-verify(/\b\w+?ious\b/g,
+verify(/\w+ious\b/,
        ["how delicious", "spacious room"],
        ["ruinous", "consciousness"]);
 
-verify(/ [.,:;]/g,
+verify(/ [.,:;]/,
        ["bad punctuation ."],
        ["escape the dot"]);
 
-verify(/\b(\w+?){7,}\b/g,
+verify(/(\w+){7,}/,
        ["hottentottententen"],
        ["no", "hotten totten tenten"]);
 
-verify(/\b[^e ,.]+?\b/g,
+verify(/\b[a-df-z]+?\b/i,
        ["red platypus", "wobbling nest"],
        ["earth bed", "learning ape"]);
 
@@ -55,9 +54,6 @@ function verify(regexp, yes, no) {
       console.log("Unexpected match for '" + s + "'");
     
   });
-  console.log(regexp);
-  console.log(yes.concat(no).toString().match(regexp));
-  console.log(" ");
 }
 
   </script>
