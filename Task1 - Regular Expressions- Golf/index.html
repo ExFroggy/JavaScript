@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!--<script src="libs.js"></script>-->
+ 
+</head>
+<body>
+
+  <script>
+
+// Fill in the regular expressions
+console.log(/ca[rt]/g.test("bad cats"));
+    
+verify(/ca[rt]/g,
+       ["my car", "bad cats"],
+       ["camper", "high art"]);
+
+verify(/p(r)?op/g,
+       ["pop culture", "mad props"],
+       ["plop"]);
+
+verify(/ferret|ferry|ferrari/g,
+       ["ferret", "ferry", "ferrari"],
+       ["ferrum", "transfer A"]);
+
+verify(/\b\w+?ious\b/g,
+       ["how delicious", "spacious room"],
+       ["ruinous", "consciousness"]);
+
+verify(/ [.,:;]/g,
+       ["bad punctuation ."],
+       ["escape the dot"]);
+
+verify(/\b(\w+?){7,}\b/g,
+       ["hottentottententen"],
+       ["no", "hotten totten tenten"]);
+
+verify(/\b[^e ,.]+?\b/g,
+       ["red platypus", "wobbling nest"],
+       ["earth bed", "learning ape"]);
+
+
+function verify(regexp, yes, no) {
+  // Ignore unfinished exercises
+  if (regexp.source == "...") return;
+  
+  yes.forEach(function(s) {
+    if (!regexp.test(s))
+      console.log("Failure to match '" + s + "'");
+    
+  });
+  no.forEach(function(s) {
+    if (regexp.test(s)) 
+      console.log("Unexpected match for '" + s + "'");
+    
+  });
+  console.log(regexp);
+  console.log(yes.concat(no).toString().match(regexp));
+  console.log(" ");
+}
+
+  </script>
+</body>
+</html>
