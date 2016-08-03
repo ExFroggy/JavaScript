@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="mountains.js"></script>
+  <script src="13_dom.js"></script>
+</head>
+
+
+<body style="min-height: 200px">
+
+<img src="cat.png" id="cat" style="position: absolute">
+<img src="hat.png" id="hat" style="position: absolute">
+
+  <script>
+  
+    var n = 0;
+    
+    function moving() {
+      if (n.toFixed(2) == Math.PI.toFixed(2)) n = 0;
+      
+      obj1 = document.getElementById("cat");
+      obj2 = document.getElementById("hat");
+
+      obj1.style.top = Math.sin(n) * 100 + 150+ "px";
+      obj1.style.left = Math.cos(n) * 300 + 400 + "px";
+
+      obj2.style.top = Math.sin(n + Math.PI) * 100 + 150 + "px";
+      obj2.style.left = Math.cos(n + Math.PI) * 300 + 400 + "px";
+
+      n += 0.02;
+      requestAnimationFrame(moving);
+    }
+    
+    requestAnimationFrame(moving);
+
+  </script>
+
+</body>
+</html>
