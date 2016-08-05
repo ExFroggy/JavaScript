@@ -1,0 +1,81 @@
+<html>
+  
+<style>
+
+  .activeTab {
+    background: yellow;
+    border: 1px solid orange;
+    
+  }
+  
+  button {
+    background: silver;
+    width: 100px;
+    border: 1px solid blue;
+    overflow: hidden;
+    font-size: 2em;
+  }
+  
+  div > div{
+    font-size: 3em;
+  }
+  
+</style>
+  
+<body>
+  
+  <div id="wrapper">
+    <div id="one" data-tabname="one">Tab one</div>
+    <div id="two" data-tabname="two">Tab two</div>
+    <div id="three" data-tabname="three">Tab three</div>
+  </div>
+  
+</body>
+  
+<script>
+  
+  function asTabs(node) {
+    
+    function createBtn(attr) {
+      var btn = document.createElement("button");
+      btn.textContent = attr;
+      btn.setAttribute("data-tabname", attr);
+      btn.className = "";
+      return btn;
+    }    
+    
+    var divs = node.querySelectorAll("div"),
+        len    = node.querySelectorAll("div").length;
+    
+    for (var i = 0; i < len; i++) {
+      var btn = createBtn(divs[i].getAttribute("data-tabname"));
+      node.insertBefore(btn, divs[0]);
+      divs[i].style.display = "none";
+    }
+    
+    node.addEventListener("click", function(event) {
+      if (event.target.nodeName == "BUTTON") {
+        var curBtn = event.target,
+            curBtnAttr = curBtn.getAttribute("data-tabname")
+            btns = (curBtn.parentNode).querySelectorAll("button"),
+            divs = (curBtn.parentNode).querySelectorAll("div");
+        
+        for (var i = 0; i < divs.length; i++) {
+          if (divs[i].getAttribute("data-tabname") == curBtnAttr) {
+            divs[i].style.display = "block";
+            curBtn.className = "activeTab";
+          } else {
+            divs[i].style.display = "none";
+            btns[i].className = "";
+          }
+        }
+      }
+    });
+  
+  }
+  
+  asTabs(document.querySelector("#wrapper"));
+  
+</script>
+  
+</html>
