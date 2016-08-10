@@ -1,0 +1,101 @@
+<canvas width="600" height="200"></canvas>
+
+<script>
+  
+  function trapeze(obj, x, y, height, top, bottomL, bottomR) {
+    if (obj || x || y || height || top || bottomL || bottomR) {
+      obj.beginPath();
+      
+      obj.moveTo(x, y);    
+      obj.lineTo(x+bottomL+top+bottomR, y);
+      obj.lineTo(x+bottomL+top, y+height);
+      obj.lineTo(x+bottomL, y+height);
+      obj.lineTo(x, y);  
+      
+      obj.stroke();
+    }
+  }  
+  
+  function rhombus(obj, x, y, width, height) {
+    obj.beginPath();
+    
+    obj.moveTo(x, y);
+    obj.lineTo(x+width/2, y-height/2);
+    obj.lineTo(x+width, y);
+    obj.lineTo(x+width/2, y+height/2);
+    obj.lineTo(x, y);
+    
+    obj.stroke();
+  }  
+  
+  function zigzag(obj, x, y, len, height, amount) {
+    obj.beginPath();
+    
+    obj.moveTo(x, y);    
+    for (var i = 0; i < amount; i++) {
+      obj.lineTo(x+len, y+height/2);
+      y += height;
+      obj.lineTo(x, y);      
+    }
+    
+    obj.stroke();
+  }
+  
+  function spiral(obj, x, y, r, d, amount) {
+    obj.beginPath();
+    var from = 0, step = Math.PI / 6;
+    
+    for (var i = 1; i <= amount; i++) {
+      cx.arc(x, y, r, from, from+step);
+      from += step;
+
+      if (i % 6 ==0) {
+        r += d;
+        if (i / 6 % 2 == 0) x -= d;
+        else x += d;
+      }
+    }
+    
+    obj.stroke();
+  }
+  
+  function star(obj, x, y, radius, amount) {
+    var step = Math.PI/180,
+        from = 3*Math.PI/2;
+    
+    obj.beginPath();    
+    obj.fillStyle = "red";
+    
+    for (var i = 0; i < amount+1; i++) {
+      var fromX = Math.cos(from+step*360/amount/2)*radius+x,
+          fromY = Math.sin(from+step*360/amount/2)*radius+y;
+      
+      if (fromX >= x && fromY < y) { a = -1; b = 1;}
+      if (fromX > x && fromY >= y) { a = -1; b = -1;}
+      if (fromX <= x && fromY > y) { a = 1; b = -1;}
+      if (fromX < x && fromY <= y) { a = 1; b = 1;}
+      
+      obj.quadraticCurveTo(fromX+(Math.abs(fromX-x)/4)*a*3,
+                           fromY+(Math.abs(fromY-y)/4)*b*3,
+                           Math.cos(from+step*360/amount)*radius+x,
+                           Math.sin(from+step*360/amount)*radius+y);
+        
+      from += step*360/amount;
+    }
+    
+    obj.fill();
+  }
+  
+  cx = document.querySelector("canvas").getContext("2d");
+  
+  trapeze(cx, 0, 50, -50, 50, 40, 40);
+  rhombus(cx, 0, 140, 100, 100);
+  zigzag(cx, 170, 0, 50, 10, 10);
+  spiral(cx, 300, 70, 2, 3, 124);
+  star(cx, 450, 70, 60, 8);
+  
+</script>
+
+
+
+
