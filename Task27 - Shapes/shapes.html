@@ -16,8 +16,9 @@
     }
   }  
   
-  function rhombus(obj, x, y, width, height) {
+  function rhombus(obj, x, y, width, height, color) {
     obj.beginPath();
+    obj.fillStyle = color;
     
     obj.moveTo(x, y);
     obj.lineTo(x+width/2, y-height/2);
@@ -25,7 +26,7 @@
     obj.lineTo(x+width/2, y+height/2);
     obj.lineTo(x, y);
     
-    obj.stroke();
+    obj.fill();
   }  
   
   function zigzag(obj, x, y, len, height, amount) {
@@ -59,12 +60,12 @@
     obj.stroke();
   }
   
-  function star(obj, x, y, radius, amount) {
+  function star(obj, x, y, radius, amount, color) {
     var step = Math.PI/180,
         from = 3*Math.PI/2;
     
     obj.beginPath();    
-    obj.fillStyle = "red";
+    obj.fillStyle = color;
     
     for (var i = 0; i < amount+1; i++) {
       var fromX = Math.cos(from+step*360/amount/2)*radius+x,
@@ -89,13 +90,9 @@
   cx = document.querySelector("canvas").getContext("2d");
   
   trapeze(cx, 0, 50, -50, 50, 40, 40);
-  rhombus(cx, 0, 140, 100, 100);
+  rhombus(cx, 0, 140, 100, 100, "red");
   zigzag(cx, 170, 0, 50, 10, 10);
   spiral(cx, 300, 70, 2, 3, 124);
-  star(cx, 450, 70, 60, 8);
+  star(cx, 450, 70, 60, 8, "yellow");
   
 </script>
-
-
-
-
