@@ -1,0 +1,41 @@
+<canvas width="600" height="300"></canvas>
+
+<script>
+  
+  var results = [
+    {name: "Satisfied", count: 1043, color: "lightblue"},
+    {name: "Neutral", count: 563, color: "lightgreen"},
+    {name: "did not come", count: 30, color: "orange"},
+    {name: "Unsatisfied", count: 510, color: "pink"},
+    {name: "No comment", count: 175, color: "silver"},
+    {name: "much comments", count: 321, color: "blue"}
+  ];
+  
+  var cx = document.querySelector("canvas").getContext("2d");
+  var total = results.reduce(function(sum, choice) {
+    return sum + choice.count;
+  }, 0);
+  var currentAngle = -0.5 * Math.PI;
+  var centerX = 300, centerY = 150;  
+  
+  results.forEach(function(result) {
+    var sliceAngle = (result.count / total) * 2 * Math.PI;
+    cx.beginPath();
+    cx.arc(centerX, centerY, 100,
+           currentAngle, currentAngle + sliceAngle);
+    
+    var textX = Math.cos(currentAngle + sliceAngle/2)*100+centerX+8,
+        textY = Math.sin(currentAngle + sliceAngle/2)*100+centerY+8;
+    
+    if (textX >= centerX && textY < centerY) {textX += 10; textY -= 10;}
+    if (textX > centerX && textY >= centerY) {textX += 10; textY += 15;}
+    if (textX <= centerX && textY > centerY) {textX -= 10*result.name.length*2/3; textY += 15;}
+    if (textX < centerX && textY <= centerY) {textX -= 10*result.name.length*2/3; textY -= 15;}
+    
+    cx.lineTo(centerX, centerY);
+    cx.fillStyle = result.color;
+    currentAngle += sliceAngle;
+    cx.fillText(result.name, textX, textY);
+    cx.fill();
+  });
+</script>
