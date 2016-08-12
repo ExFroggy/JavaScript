@@ -1,0 +1,44 @@
+<canvas width="400" height="400"></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d"),
+      lastTime = null,
+      ballSpeedX = 300,
+      ballSpeedY = 270;
+  
+  do {
+    fromX = (360-40)*Math.random(0, 1)+40; 
+    fromY = (360-40)*Math.random(0, 1)+40;
+  }
+  while (fromX == fromY && fromX + fromY == 400);
+  
+  function frame(time) {
+    if (lastTime != null)
+      updateAnimation(Math.min(100, time - lastTime) / 1000);
+    lastTime = time;
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+  
+  function updateAnimation(step) {
+    cx.beginPath();
+    cx.clearRect(0, 0, 400, 400);
+    cx.strokeRect(0, 0, 400, 400);
+    
+    cx.fillStyle = "blue";
+    cx.arc(fromX, fromY, 10, 0, 2 * Math.PI);
+    cx.fill();
+    
+    cx.closePath();
+    
+    if (fromX + ballSpeedX * step <= 0+10 || 
+        fromX + ballSpeedX * step >= 400-10)
+      ballSpeedX *= -1;
+    if (fromY + ballSpeedY * step <= 0+10 || 
+        fromY + ballSpeedY * step >= 400-10)
+      ballSpeedY *= -1;
+    
+    fromX += ballSpeedX * step;
+    fromY += ballSpeedY * step;    
+    
+  }
+</script>
