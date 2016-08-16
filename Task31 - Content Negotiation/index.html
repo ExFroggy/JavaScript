@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Main</title>
+  <meta charset="utf-8">
+</head>
+  
+<body>
+  
+</body>
+  
+<script>
+  var	req	=	new	XMLHttpRequest();
+  req.addEventListener("load", function() {
+    console.log(this.responseText);
+  })
+  
+  function GET(text) {
+    req.open("GET",	"http://eloquentjavascript.net/author",	false);
+    req.setRequestHeader("Accept", text);
+    req.send(null);
+  }
+
+  GET("text/plain");
+  GET("text/html");
+  GET("application/json");
+  GET("application/rainbows+unicorns");
+
+</script>
+  
+</html>
