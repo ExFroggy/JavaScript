@@ -1,0 +1,53 @@
+<head>
+  <meta charset="utf-8">
+  <style type="text/css">
+    #suggestions {
+      width: 400px;
+      height: 400px;
+      overflow: auto;
+    }
+  </style>
+</head>
+
+<input type="text" id="field">
+<label><input type="checkbox" id="check">только слово целиком</label>
+<div id="suggestions" style="cursor: pointer"></div>
+
+<script>
+  
+  var terms = [];
+  for (var name in window)
+    terms.push(name);
+  terms.sort();
+  
+  document.getElementById("suggestions").addEventListener("click", function(event) {
+    document.getElementById("field").value = event.target.textContent;
+    document.getElementById("suggestions").textContent = "";
+  })
+  
+  document.getElementById("field").addEventListener("keyup", function(event) {
+    function createElem(current) {
+      var obj = document.createElement("div");
+      obj.textContent = current;
+      document.getElementById("suggestions").appendChild(obj);
+    }
+    
+    document.getElementById("suggestions").textContent = "";
+    var text = this.value;
+    
+    terms.forEach(function(current) {
+      if (text != "") {        
+        if (document.getElementById("check").checked == true) {
+          if (current.toLowerCase().indexOf(text.toLowerCase()) == 0) {
+            createElem(current);
+          }
+        } else {
+          if (current.toLowerCase().indexOf(text.toLowerCase()) >= 0) {
+            createElem(current);
+        }
+        }
+      }
+    });
+  });
+  
+</script>
