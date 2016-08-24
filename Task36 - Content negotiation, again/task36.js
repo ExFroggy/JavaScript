@@ -19,9 +19,11 @@ function GET(text) {
     method: "get",
     headers: {Accept: text}
   }, function(response) {
-    readStreamAsString(response, console.log);
-    console.log(response.responseText);
-    console.log("");
+    readStreamAsString(response, function(arg1, arg2) {
+      if (!arg1) {
+        console.log(text, arg2);
+      }
+    });
   });
   request.end();
 }
