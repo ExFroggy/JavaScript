@@ -52,7 +52,7 @@ http.createServer(function(request, response) {
 
 var http =require("http");
 var request = http.request({
-  hostname: "localhost",
+  hostname: "127.0.0.1",
   path: "/1",
   method: "MKCOL"
 });
