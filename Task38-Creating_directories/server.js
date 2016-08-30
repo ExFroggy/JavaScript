@@ -4,15 +4,11 @@ var http = require("http"),
 
 methods.MKCOL = function(path, respond) {
   fs.stat(path, function(error, stats) {
-    console.log(stats);
     if (error && error.code == "ENOENT") {
-      console.log("err1");
       fs.mkdir(path, respondErrorOrNothing(respond));
     } else if (error) {
-      console.log("err2");
       respond(500, error.toString());
     } else if (stats.isDirectory()) {
-      console.log("err3");
       respond(204);
     }
   });
