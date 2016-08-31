@@ -1,0 +1,131 @@
+<html>
+<head>
+  <title>main</title>
+  <meta charset="utf-8">
+  
+  <style type="text/css">
+  
+    textarea {
+      width: 700px;
+      height: 500px;
+    }
+  
+  </style>
+  
+</head>
+  
+<body>
+  <select></select>
+  <input type="button" onclick = 'REQUEST("GET")' value = "Update" id="update">
+  <input type="button" value = "up" id="up">
+  <br>
+  
+  <input type="text" placeholder="name" id="filename">
+  <label><input type="radio" name="check" id="file">file</label>
+  <label><input type="radio" name="check" id="directory">directory</label>
+  <input type="button" value="create" id="create">
+  
+  <textarea></textarea><br>
+  <input type="button" value="save file" id="save">
+  <input type="button" value="delete file" id="delete">
+  
+</body>  
+  
+<script>
+  var respond, directory = "",
+      btnUpdate = document.getElementById("update"),
+      btnUp = document.getElementById("up"),
+      btnSave = document.getElementById("save"),
+      btnDelete = document.getElementById("delete"),
+      fileName = document.getElementById("filename"),
+      btnCreate = document.getElementById("create"),
+      list = document.querySelector("select"),
+      textarea = document.querySelector("textarea");
+  
+  fileName.disabled = true;
+  btnCreate.disabled = true;
+  
+  list.addEventListener("change", function(e) {
+    if (list.selectedIndex != 0) {
+      REQUEST("GET", list.childNodes[list.selectedIndex].textContent);
+    }
+  });
+  
+  btnUpdate.addEventListener("click", function() {
+    fileName.disabled = false;
+    btnCreate.disabled = false;
+  })
+  
+  btnUp.addEventListener("click", function() {
+    if (directory != "") {
+      directory = directory.replace(/[\w\s]*\/$/, "");
+      btnUpdate.click();
+    }
+  });
+  
+  btnSave.addEventListener("click", function() {
+    REQUEST("PUT", 
+            list.childNodes[list.selectedIndex].textContent, 
+            document.querySelector("textarea").value);
+  });
+  
+  btnCreate.addEventListener("click", function() {
+    if (fileName.value != ""){
+      if (document.getElementById("file").checked) {
+        REQUEST("PUT", fileName.value);
+        btnUpdate.click();
+      }
+      
+      if (document.getElementById("directory").checked) {
+        REQUEST("MKCOL", fileName.value);
+        btnUpdate.click();
+      }
+    }
+  });
+  
+  btnDelete.addEventListener("click", function() {
+    REQUEST("DELETE", 
+          list.childNodes[list.selectedIndex].textContent);
+    btnUpdate.click();
+  });
+  
+  var req = new	XMLHttpRequest();
+  req.addEventListener("load", function() {
+    respond = this.responseText;
+//    console.log(respond);
+//    console.log(this);
+  });
+  
+  function REQUEST(method, path, body) {
+    if (path == undefined) path = "";
+    if (body == undefined) body = "";
+
+    req.open(method, "./" + directory + path, false);
+    req.send(body);
+
+    if (method == "GET") {
+      var respCopy = respond.split(String.fromCharCode(10))
+      if (respCopy[respCopy.length-1] == "directory") {
+        console.log("ответ: список");
+        list.textContent = "";
+        respCopy.pop();
+        if (path != "")
+          directory = directory + path + "/";
+
+        list.appendChild(document.createElement("option"));
+        respCopy.forEach(function(cur, i) {
+          var obj = document.createElement("option");
+          obj.textContent = cur;
+          list.appendChild(obj);
+        });
+
+        textarea.value = "";
+      } else {
+  //      console.log("Ответ: файл");
+        textarea.value = respond;
+      }
+    }
+  }
+</script>
+  
+</html>
